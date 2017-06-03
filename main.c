@@ -290,6 +290,7 @@ void preenche_lista_primeiros(Tree* personagem, int* posicao){
 }
 
 /*Cria os primeiros 4 personagens aleatorios*/
+
 Lista* cria_primeiros_personagens(){
 	Lista* lista= cria_lista();
 	int i, j;
@@ -299,8 +300,9 @@ Lista* cria_primeiros_personagens(){
 	for (i=1; i<=5; i++){
 		srand(time(NULL));
 		personagem=cria_arvore_personagem(i);
+		printf("passou aqui\n");
 		insere_lista(lista, i-1 , personagem);
-
+		printf("passou aqui 2\n");
 		preenche_lista_primeiros(personagem, posicao);
 	}
 
@@ -315,14 +317,30 @@ int main()
 
 	/*Criamos uma arvore de personagem para testes */
 	/*Lembre-se que ela recebe o id do personagem */
-	Tree* personagem = cria_arvore_personagem(0);
-	imprime_arvore(personagem);
+	//Tree* personagem = cria_arvore_personagem(0);
+	//imprime_arvore(personagem);
+
+	Lista* lista = cria_primeiros_personagens();
+	printf("passou\n");
+	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
+	printf("%s\n", personagem->left->right->right->info->carac);*/
+	
+	int i;
+	Nodo* nodo;
+
+	for (i=0; i<5; i++){
+		nodo = retorna_elemento(lista, i);
+		imprime_arvore(nodo->personagem);
+	}
+
+
+	
 	printf("\nO personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual");
 	printf("\n\n");
 
 
 
 	/*Caso queira testar a biblioteca grafica */
-	imprime_personagem_aleatorio();
+	//imprime_personagem_aleatorio();
     return 0;
 }
