@@ -298,9 +298,10 @@ Lista* cria_primeiros_personagens(){
 	Lista* lista= cria_lista();
 	int i, j;
 	int* posicao = (int *) malloc(sizeof(int));
-	Tree* personagem = (Tree *) malloc(sizeof(Tree*));
-	*posicao = 1;
+	Tree* personagem;
+	
 	for (i=1; i<=5; i++){
+		*posicao = 1;
 		srand(time(NULL));
 		personagem=cria_arvore_personagem(i);
 		printf("passou aqui\n");
