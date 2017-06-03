@@ -20,7 +20,7 @@ typedef struct lista{/*Endereco da cabeca da lista*/
 /*Assinatura das funcoes*/
 Lista*  cria_lista();
 int     vazia_lista(Lista *cabeca);
-Lista   retorna_ultimo(Lista *cabeca, int posicao);
+Nodo*   retorna_elemento(Lista *cabeca, int posicao);
 int     tamanho_lista(Lista *cabeca);
 void    insere_lista(Lista *cabeca, int posicao, Tree *personagem);
 void    remove_lista(Lista *cabeca, int posicao);
@@ -42,7 +42,7 @@ int vazia_lista(Lista *cabeca){/*Funcao retorna 1 caso a lista esteja vazia e 0 
 		return 0;
 }
 
-Nodo retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco da ultima celula da lista*/
+Nodo* retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco da ultima celula da lista*/
 	Nodo *last = (Nodo *) malloc (sizeof(Nodo));
 	int c=0;
 
@@ -52,11 +52,11 @@ Nodo retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco da
 		last=last->prox;
 		c++;
 	}
-	return *last;
+	return last;
 }
 
 int tamanho_lista(Lista *cabeca){/*Retorna um inteiro com tamanho(Número de celulas) da lista*/
-	int i=0;
+	int i=1;
 	Nodo *last = (Nodo *) malloc (sizeof(Nodo));	
 
 	last = cabeca->primeiro;
@@ -72,19 +72,22 @@ void insere_lista(Lista *cabeca, int posicao, Tree *personagem){/*Funcao que ins
 	int tamanho;
 
 	novo->personagem=personagem;
-	novo-prox=NULL;
+	novo->prox=NULL;
 	novo->ant=NULL;
-	aux=retorna_elemento(cabeca, posicao);
+	if(posicao>0)
+		aux=retorna_elemento(cabeca, posicao-1);
 	if(vazia_lista(cabeca)){
 		cabeca->primeiro=novo;
 	}
 	else{
 		tamanho=tamanho_lista(cabeca);
 		if(tamanho==posicao){
+			printf("Ultimo\n");
 			aux->prox=novo;
 			novo->ant=aux;
 		}
 		else if(tamanho>posicao){
+			printf("Otro\n");
 			aux->ant->prox=novo;
 			novo->ant=aux->ant;
 			novo->prox=aux;
@@ -326,7 +329,7 @@ int main()
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
 	int i;
-	Nodo* nodo;
+	Nodo *nodo;
 
 	for (i=0; i<5; i++){
 		nodo = retorna_elemento(lista, i);
