@@ -132,6 +132,183 @@ void free_lista(Lista* cabeca){/*Funcao libera todos os elementos da lista*/
 
 
 
+void preenche_lista_primeiros(Tree* personagem, int* posicao){
+	int escolha;
+	int flag;
+	if (personagem != NULL){
+		//printf("Passou na esquerda\n");
+		preenche_lista_primeiros(personagem->left, 	posicao);
+		int escolha;
+		if (personagem->left==NULL){
+			flag=*posicao;
+			*posicao = flag + 1;
+			//printf("%d\n", flag);
+			
+			if (flag <9){
+				
+				if (flag <7){
+					if ((flag == 1) || (flag == 2)){
+						escolha = 1+rand()%4;
+						personagem->info->dom=escolha; //Salva a dominancia
+
+						if (escolha <3){ //cor dos olhos
+							if (escolha == 1){
+								strcpy(personagem->info->carac,"azul");
+							}else{
+								strcpy(personagem->info->carac,"castanho");
+							}
+						}else{
+							if (escolha==3){
+								strcpy(personagem->info->carac,"preto");
+							}else{
+								strcpy(personagem->info->carac,"verde");
+							}
+						}
+					}else{
+						//formato dos olhos
+						if ((flag == 3) || (flag == 4)){
+							escolha = 5 + rand() % 2;
+							personagem->info->dom=escolha;
+							if (escolha == 5){
+								strcpy(personagem->info->carac,"circular");
+							}else{
+								strcpy(personagem->info->carac,"triangular");
+							}
+						}else{
+							//cor do cabelo
+							if ((flag == 5) || (flag == 6)){
+								escolha = 7+rand()%4;
+								personagem->info->dom=escolha; //Salva a dominancia
+
+								if (escolha <9){
+									if (escolha == 7){
+										strcpy(personagem->info->carac,"amarelo");
+									}else{
+										strcpy(personagem->info->carac,"azul");
+									}
+								}else{
+									if (escolha==9){
+										strcpy(personagem->info->carac,"preto");
+									}else{
+										strcpy(personagem->info->carac,"vermelho");
+									}
+								}
+							}
+						}
+					}
+				}else{
+					//formato do cabelo
+					if ((flag == 7) || (flag == 8)){
+						escolha = 11+rand()%4;
+						personagem->info->dom=escolha; //Salva a dominancia
+
+						if (escolha <13){
+							if (escolha == 11){
+								strcpy(personagem->info->carac,"careca");
+							}else{
+								strcpy(personagem->info->carac,"goku");
+							}
+						}else{
+							if (escolha==13){
+								strcpy(personagem->info->carac,"trunks");
+							}else{
+								strcpy(personagem->info->carac,"vegeta");
+							}
+						}
+					}
+				}
+			}else{
+				if (flag <15){
+					//calcas
+					if ((flag == 9) || (flag == 10)){
+						escolha = 15 +rand()%3;
+						personagem->info->dom=escolha; //Salva a dominancia
+
+						if (escolha <17){ //cor dos olhos
+							if (escolha == 15){
+								strcpy(personagem->info->carac,"azul");
+							}else{
+								strcpy(personagem->info->carac,"laranja");
+							}
+						}else{							
+							strcpy(personagem->info->carac,"preta");
+						}
+					}else{
+						//cor da bota
+						if ((flag == 11) || (flag == 12)){
+							escolha = 18 +rand()%3;
+							personagem->info->dom=escolha; //Salva a dominancia
+
+							if (escolha <20){ //cor dos olhos
+								if (escolha == 18){
+									strcpy(personagem->info->carac,"azul");
+								}else{
+									strcpy(personagem->info->carac,"marrom");
+								}
+							}else{							
+								strcpy(personagem->info->carac,"preta");
+							}
+						}else{
+							//raca
+							if ((flag == 13) || (flag == 14)){
+								escolha = 21 + rand() % 3;
+								personagem->info->dom=escolha; //Salva a dominancia
+
+								if (escolha <23){
+									if (escolha == 21){
+										strcpy(personagem->info->carac,"humano");
+									}else{
+										strcpy(personagem->info->carac,"namekusei");
+									}
+								}else{
+									strcpy(personagem->info->carac,"saiyajin");
+								}
+							}
+						}
+					}
+				}else{
+					//camisa
+					if ((flag == 15) || (flag == 16)){
+						escolha = 24+rand()%3;
+						personagem->info->dom=escolha; //Salva a dominancia
+
+						if (escolha <26){
+							if (escolha == 24){
+								strcpy(personagem->info->carac,"armadura");
+							}else{
+								strcpy(personagem->info->carac,"treino");
+							}
+						}else{							
+							strcpy(personagem->info->carac,"semcamisa");
+						}
+					}
+				}
+			}
+		}
+		preenche_lista_primeiros(personagem->right, posicao);
+	}	
+}
+
+/*Cria os primeiros 4 personagens aleatorios*/
+Lista* cria_primeiros_personagens(){
+	Lista* lista= cria_lista();
+	int i, j;
+	int* posicao = (int *) malloc(sizeof(int));
+	Tree* personagem = (Tree *) malloc(sizeof(Tree*));
+	*posicao = 1;
+	for (i=1; i<=5; i++){
+		srand(time(NULL));
+		personagem=cria_arvore_personagem(i);
+		insere_lista(lista, i-1 , personagem);
+
+		preenche_lista_primeiros(personagem, posicao);
+	}
+
+	return lista;
+}
+
+
+
 int main()
 {
 	
