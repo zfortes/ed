@@ -300,13 +300,11 @@ Lista* cria_primeiros_personagens(){
 	int* posicao = (int *) malloc(sizeof(int));
 	Tree* personagem;
 	
-	for (i=1; i<=5; i++){
+	for (i=1; i<5; i++){
 		*posicao = 1;
 		srand(time(NULL));
 		personagem=cria_arvore_personagem(i);
-		printf("passou aqui\n");
 		insere_lista(lista, i-1 , personagem);
-		printf("passou aqui 2\n");
 		preenche_lista_primeiros(personagem, posicao);
 	}
 
@@ -314,6 +312,279 @@ Lista* cria_primeiros_personagens(){
 }
 
 
+int carac_mutante(int carac){/*Funcao retorna um inteiro correspondente a caracteristica aleatoria para um gene mutante*/
+	int x;
+
+	srand((unsigned)time(NULL));
+	if((carac>0) && (carac<5)){
+		x=1+(rand()%4);
+	}
+	else if((carac>4) && (carac<7)){
+		x=5+(rand()%6);
+	}
+	else if((carac>6) && (carac<11)){
+		x=7+(rand()%10);
+	}
+	else if((carac>10) && (carac<15)){
+		x=11+(rand()%14);
+	}
+	else if((carac>14) && (carac<18)){
+		x=15+(rand()%17);
+	}
+	else if((carac>17) && (carac<21)){
+		x=18+(rand()%20);
+	}
+	else if((carac>20) && (carac<24)){
+		x=21+(rand()%23);
+	}
+	else if((carac>23) && (carac<27)){
+		x=24+(rand()%26);
+	}
+	return x;
+}
+
+int retorna_dominante(int carac1, int carac2){/*Funcao retorna o inteiro correspondente ao do gene dominante ou -1 para um mutante*/
+	int mut=-1, x;
+	
+	srand((unsigned)time(NULL));
+	x=1+(rand()%10);
+	if((x==1) || (x==2)){/*Teste de mutacao*/
+		return mut;
+	}
+	else{
+		if(carac1==carac2)
+			return carac1;
+		else{
+			if(carac1<carac2)
+				return carac1;
+			else
+				return carac2;
+		}
+	}
+}
+
+void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funcao percorre duas arvores e preenche uma terceira*/
+	int cont=0;
+	
+	if( pai!= NULL){
+		if((strcmp(filho->left->info->carac, "VAZIO")==0) && (strcmp(filho->right->info->carac, "VAZIO"))==0){
+			/*atribuicoes a folha left do filho*/
+			filho->left->info->pai=pai->info->id;
+			filho->left->info->mae=mae->info->id;
+			filho->left->info->dom=retorna_dominante(pai->left->info->dom, pai->right->info->dom);
+			filho->left->info->id=posicao;
+			if(filho->left->info->dom==pai->left->info->dom)
+				strcpy(filho->left->info->carac,pai->left->info->carac);
+			else if(filho->left->info->dom==pai->right->info->dom)
+				strcpy(filho->left->info->carac,pai->right->info->carac);
+			/*atribuicoes a folha right do filho*/
+			filho->right->info->pai=pai->info->id;
+			filho->right->info->mae=mae->info->id;
+			filho->right->info->dom=retorna_dominante(mae->left->info->dom, mae->right->info->dom);
+			filho->right->info->id=posicao;
+			if(filho->right->info->dom==mae->left->info->dom)
+				strcpy(filho->right->info->carac,mae->left->info->carac);
+			else if(filho->right->info->dom==mae->right->info->dom)
+				strcpy(filho->right->info->carac,mae->right->info->carac);
+			if((filho->left->info->dom)<(filho->right->info->dom)){/*Teste que deixa a folha do gene dominante sempre a esquerda*/
+				Tree *aux;
+				aux=filho->left;
+				filho->left=filho->right;
+				filho->right=aux;
+			}
+			/*Mutacao*/
+			if(filho->left->info->dom==-1){
+				filho->left->info->mutante=1;
+				filho->left->info->dom=carac_mutante(filho->left->info->dom);
+				
+				if(filho->left->info->dom==1)
+					strcpy(filho->left->info->carac,"azul");
+				else if(filho->left->info->dom==2)
+					strcpy(filho->left->info->carac,"castanho");
+				else if(filho->left->info->dom==3)
+					strcpy(filho->left->info->carac,"preto");
+				else if(filho->left->info->dom==4)
+					strcpy(filho->left->info->carac,"verde");
+				else if(filho->left->info->dom==5)
+					strcpy(filho->left->info->carac,"circular");
+				else if(filho->left->info->dom==6)
+					strcpy(filho->left->info->carac,"triangular");
+				else if(filho->left->info->dom==7)
+					strcpy(filho->left->info->carac,"amarelo");
+				else if(filho->left->info->dom==8)
+					strcpy(filho->left->info->carac,"azul");
+				else if(filho->left->info->dom==9)
+					strcpy(filho->left->info->carac,"preto");
+				else if(filho->left->info->dom==10)
+					strcpy(filho->left->info->carac,"vermelho");
+				else if(filho->left->info->dom==11)
+					strcpy(filho->left->info->carac,"careca");
+				else if(filho->left->info->dom==12)
+					strcpy(filho->left->info->carac,"goku");
+				else if(filho->left->info->dom==13)
+					strcpy(filho->left->info->carac,"trunks");
+				else if(filho->left->info->dom==14)
+					strcpy(filho->left->info->carac,"vegeta");
+				else if(filho->left->info->dom==15)
+					strcpy(filho->left->info->carac,"azul");
+				else if(filho->left->info->dom==16)
+					strcpy(filho->left->info->carac,"laranja");
+				else if(filho->left->info->dom==17)
+					strcpy(filho->left->info->carac,"preta");
+				else if(filho->left->info->dom==18)
+					strcpy(filho->left->info->carac,"azul");
+				else if(filho->left->info->dom==19)
+					strcpy(filho->left->info->carac,"marrom");
+				else if(filho->left->info->dom==20)
+					strcpy(filho->left->info->carac,"preta");
+				else if(filho->left->info->dom==21)
+					strcpy(filho->left->info->carac,"humano");
+				else if(filho->left->info->dom==22)
+					strcpy(filho->left->info->carac,"namekusei");
+				else if(filho->left->info->dom==23)
+					strcpy(filho->left->info->carac,"saiyajin");
+				else if(filho->left->info->dom==24)
+					strcpy(filho->left->info->carac,"armadura");
+				else if(filho->left->info->dom==25)
+					strcpy(filho->left->info->carac,"treino");
+				else if(filho->left->info->dom==26)
+					strcpy(filho->left->info->carac,"sem camisa");
+			}
+			if(filho->right->info->dom==-1){
+				filho->right->info->mutante=1;
+				filho->right->info->dom=carac_mutante(filho->right->info->dom);
+				
+				if(filho->right->info->dom==1)
+					strcpy(filho->right->info->carac,"azul");
+				else if(filho->right->info->dom==2)
+					strcpy(filho->right->info->carac,"castanho");
+				else if(filho->right->info->dom==3)
+					strcpy(filho->right->info->carac,"preto");
+				else if(filho->right->info->dom==4)
+					strcpy(filho->right->info->carac,"verde");
+				else if(filho->right->info->dom==5)
+					strcpy(filho->right->info->carac,"circular");
+				else if(filho->right->info->dom==6)
+					strcpy(filho->right->info->carac,"triangular");
+				else if(filho->right->info->dom==7)
+					strcpy(filho->right->info->carac,"amarelo");
+				else if(filho->right->info->dom==8)
+					strcpy(filho->right->info->carac,"azul");
+				else if(filho->right->info->dom==9)
+					strcpy(filho->right->info->carac,"preto");
+				else if(filho->right->info->dom==10)
+					strcpy(filho->right->info->carac,"vermelho");
+				else if(filho->right->info->dom==11)
+					strcpy(filho->right->info->carac,"careca");
+				else if(filho->right->info->dom==12)
+					strcpy(filho->right->info->carac,"goku");
+				else if(filho->right->info->dom==13)
+					strcpy(filho->right->info->carac,"trunks");
+				else if(filho->right->info->dom==14)
+					strcpy(filho->right->info->carac,"vegeta");
+				else if(filho->right->info->dom==15)
+					strcpy(filho->right->info->carac,"azul");
+				else if(filho->right->info->dom==16)
+					strcpy(filho->right->info->carac,"laranja");
+				else if(filho->right->info->dom==17)
+					strcpy(filho->right->info->carac,"preta");
+				else if(filho->right->info->dom==18)
+					strcpy(filho->right->info->carac,"azul");
+				else if(filho->right->info->dom==19)
+					strcpy(filho->right->info->carac,"marrom");
+				else if(filho->right->info->dom==20)
+					strcpy(filho->right->info->carac,"preta");
+				else if(filho->right->info->dom==21)
+					strcpy(filho->right->info->carac,"humano");
+				else if(filho->right->info->dom==22)
+					strcpy(filho->right->info->carac,"namekusei");
+				else if(filho->right->info->dom==23)
+					strcpy(filho->right->info->carac,"saiyajin");
+				else if(filho->right->info->dom==24)
+					strcpy(filho->right->info->carac,"armadura");
+				else if(filho->right->info->dom==25)
+					strcpy(filho->right->info->carac,"treino");
+				else if(filho->right->info->dom==26)
+					strcpy(filho->right->info->carac,"sem camisa");
+			}
+
+		}
+		else{/*Recursividade para percorrer a lista*/
+	        	preenche_personagem(pai->left, mae->left, filho->left, posicao);
+        		preenche_personagem(pai->right, mae->right, filho->right, posicao);
+		}
+	}
+}
+
+
+void cria_descendente(Lista *cabeca){
+	int i=0, x, k=4, aux, possibilidades[6], flag[6];
+	Nodo *pai1, *pai2;
+	Tree *filho;
+
+	for(i=0; i<6; i++){
+		possibilidades[i]=i;
+		flag[i]=0;
+	}
+	for(i=1; i <4; i++){
+		aux=i;
+	        x=rand()%6;
+		if((x==possibilidades[0]) && flag[0]==0){
+			pai1=retorna_elemento(cabeca, 0);
+			pai2=retorna_elemento(cabeca, 1);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[0]=1;
+		}
+		else if((x==possibilidades[1]) && flag[1]==0){
+			pai1=retorna_elemento(cabeca, 0);
+			pai2=retorna_elemento(cabeca, 2);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[1]=1;
+		}
+		else if((x==possibilidades[2]) && flag[2]==0){
+			pai1=retorna_elemento(cabeca, 0);
+			pai2=retorna_elemento(cabeca, 3);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[2]=1;
+		}
+		else if((x==possibilidades[3]) && flag[3]==0){
+			pai1=retorna_elemento(cabeca, 1);
+			pai2=retorna_elemento(cabeca, 2);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[3]=1;
+		}
+		else if((x==possibilidades[4]) && flag[4]==0){
+			pai1=retorna_elemento(cabeca, 1);
+			pai2=retorna_elemento(cabeca, 3);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[4]=1;
+		}
+		else if((x==possibilidades[5]) && flag[5]==0){
+			pai1=retorna_elemento(cabeca, 2);
+			pai2=retorna_elemento(cabeca, 3);
+			filho= cria_arvore_personagem(k);
+			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
+			k++;
+			flag[5]=1;
+		}
+		else
+			i--;
+		if(aux==i)
+			insere_lista(cabeca, k-1 , filho);
+		srand( (unsigned)time(NULL) );
+	}
+
+}
 
 int main()
 {
@@ -325,14 +596,16 @@ int main()
 	//imprime_arvore(personagem);
 
 	Lista* lista = cria_primeiros_personagens();
-	printf("passou\n");
+	printf("passou e tal\n");
+	cria_descendente(lista);
+	printf("main\n");
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
 	int i;
 	Nodo *nodo;
 
-	for (i=0; i<5; i++){
+	for (i=0; i<8; i++){
 		nodo = retorna_elemento(lista, i);
 		imprime_arvore(nodo->personagem);
 	}
