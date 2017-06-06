@@ -515,7 +515,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 }
 
 
-void cria_descendente(Lista *cabeca){
+int* cria_descendente(Lista *cabeca){
 	int i=0, x, k=5, aux, possibilidades[6], flag[6];
 	Nodo *pai1, *pai2;
 	Tree *filho;
@@ -593,12 +593,39 @@ void cria_descendente(Lista *cabeca){
 		if(aux==i)
 			insere_lista(cabeca, k-2 , filho);
 	}
+	return flag;
 
 }
 
-int main()
-{
+void cria_novageracao(int *usados){
+	int matriz[8][8], i, j;
+
+	for(i=0; i<8; i++){
+		for(j=0; j<8; j++){
+			if(i==j)
+				matriz[i][j]=1;
+			else
+				matriz[i][j]=0;
+		}
+	}
+	if(usados[0]==1)
+		matriz[0][1]=1;
+	if(usados[1]==1)
+		matriz[0][2]=1;
+	if(usados[2]==1)
+		matriz[0][3]=1;
+	if(usados[3]==1)
+		matriz[1][2]=1;
+	if(usados[4]==1)
+		matriz[1][3]=1;
+	if(usados[5]==1)
+		matriz[2][3]=1;
+
 	
+} 
+
+int main(){
+	int *usados;
 
 	/*Criamos uma arvore de personagem para testes */
 	/*Lembre-se que ela recebe o id do personagem */
@@ -606,7 +633,8 @@ int main()
 	//imprime_arvore(personagem);
 
 	Lista* lista = cria_primeiros_personagens();
-	cria_descendente(lista);
+	usados=cria_descendente(lista);
+	cria_novageracao(usados);
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
