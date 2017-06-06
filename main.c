@@ -300,10 +300,10 @@ Lista* cria_primeiros_personagens(){
 	int i, j;
 	int* posicao = (int *) malloc(sizeof(int));
 	Tree* personagem;
-	
+	srand(time(NULL));
 	for (i=1; i<5; i++){
 		*posicao = 1;
-		srand(time(NULL));
+		
 		personagem=cria_arvore_personagem(i);
 		insere_lista(lista, i-1 , personagem);
 		preenche_lista_primeiros(personagem, posicao);
@@ -647,7 +647,7 @@ int main()
 
 	Lista* lista = cria_primeiros_personagens();
 	printf("passou e tal\n");
-	cria_descendente(lista);
+	//cria_descendente(lista);
 	printf("main\n");
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
@@ -655,8 +655,9 @@ int main()
 	int i;
 	Nodo *nodo;
 
-	for (i=0; i<8; i++){
+	for (i=0; i<4; i++){
 		nodo = retorna_elemento(lista, i);
+		imprime_arvore(nodo->personagem);
 		printf("aindaimprime");
 	}
 
