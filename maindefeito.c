@@ -634,10 +634,10 @@ void cria_novageracao(int *usados){
 	int i;
 	Tree* pai1, pai2;
 	int escolha1, escolha2;
-	while (i=7; i<15; i++){
-		escolha1 = 7 + rand() % 8;
-		escolha2 = 7 + rand() % 8;
-	}
+	//while (i=7; i<15; i++){
+	//	escolha1 = 7 + rand() % 8;
+	//	escolha2 = 7 + rand() % 8;
+	//}
 
 
 } 

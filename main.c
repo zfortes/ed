@@ -516,7 +516,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 
 
 int* cria_descendente(Lista *cabeca){
-	int i=0, x, k=5, aux, possibilidades[6], flag[6];
+	int i=0, x, k=5, aux, possibilidades[6], *flag = (int *) calloc (6, sizeof (int));
 	Nodo *pai1, *pai2;
 	Tree *filho;
 
@@ -600,28 +600,45 @@ int* cria_descendente(Lista *cabeca){
 void cria_novageracao(int *usados){
 	int matriz[8][8], i, j;
 
+	//Elimina a possibilidade de um casal ser formado com ele mesmo na matriz
 	for(i=0; i<8; i++){
 		for(j=0; j<8; j++){
-			if(i==j)
+			if(i==j){
 				matriz[i][j]=1;
-			else
+			}
+			else{
 				matriz[i][j]=0;
+			}
 		}
 	}
-	if(usados[0]==1)
+	//Insere os casais ja feitos na funcao dos 8 primeiros
+	if(usados[0]==1){
 		matriz[0][1]=1;
-	if(usados[1]==1)
+	}
+	if(usados[1]==1){
 		matriz[0][2]=1;
-	if(usados[2]==1)
+	}
+	if(usados[2]==1){
 		matriz[0][3]=1;
-	if(usados[3]==1)
+	}
+	if(usados[3]==1){
 		matriz[1][2]=1;
-	if(usados[4]==1)
+	}
+	if(usados[4]==1){
 		matriz[1][3]=1;
-	if(usados[5]==1)
+	}
+	if(usados[5]==1){
 		matriz[2][3]=1;
+	}
 
-	
+	Tree* pai1, pai2;
+	int escolha1, escolha2;
+	//while (i=7; i<15; i++){
+	//	escolha1 = 7 + rand() % 8;
+	//	escolha2 = 7 + rand() % 8;
+	//}
+
+
 } 
 
 int main(){
