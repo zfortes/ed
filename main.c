@@ -384,7 +384,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 				strcpy(filho->right->info->carac,mae->left->info->carac);
 			else if(filho->right->info->dom==mae->right->info->dom)
 				strcpy(filho->right->info->carac,mae->right->info->carac);
-			if((filho->left->info->dom)<(filho->right->info->dom)){/*Teste que deixa a folha do gene dominante sempre a esquerda*/
+			if((filho->left->info->dom)>(filho->right->info->dom)){/*Teste que deixa a folha do gene dominante sempre a esquerda*/
 				Tree *aux;
 				aux=filho->left;
 				filho->left=filho->right;
