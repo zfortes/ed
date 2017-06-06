@@ -46,6 +46,7 @@ Nodo* retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco d
 	Nodo *last = (Nodo *) malloc (sizeof(Nodo));
 	int c=0;
 
+	printf("\n\n--%d--\n\n", posicao);
 	last = cabeca->primeiro;
 
 	while(c!=posicao){
@@ -518,7 +519,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 
 
 void cria_descendente(Lista *cabeca){
-	int i=0, x, k=4, aux, possibilidades[6], flag[6];
+	int i=0, x, k=5, aux, possibilidades[6], flag[6];
 	Nodo *pai1, *pai2;
 	Tree *filho;
 
@@ -526,62 +527,111 @@ void cria_descendente(Lista *cabeca){
 		possibilidades[i]=i;
 		flag[i]=0;
 	}
-	for(i=1; i <4; i++){
+	srand( (unsigned)time(NULL) );
+	for(i=0; i <4; i++){
 		aux=i;
 	        x=rand()%6;
+		printf("K %d %d\n", k, x);
 		if((x==possibilidades[0]) && flag[0]==0){
 			pai1=retorna_elemento(cabeca, 0);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 1);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[0]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else if((x==possibilidades[1]) && flag[1]==0){
 			pai1=retorna_elemento(cabeca, 0);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 2);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[1]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else if((x==possibilidades[2]) && flag[2]==0){
 			pai1=retorna_elemento(cabeca, 0);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 3);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[2]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else if((x==possibilidades[3]) && flag[3]==0){
 			pai1=retorna_elemento(cabeca, 1);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 2);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[3]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else if((x==possibilidades[4]) && flag[4]==0){
 			pai1=retorna_elemento(cabeca, 1);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 3);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[4]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else if((x==possibilidades[5]) && flag[5]==0){
 			pai1=retorna_elemento(cabeca, 2);
+			printf("\npai\n");
+			imprime_arvore(pai1->personagem);
 			pai2=retorna_elemento(cabeca, 3);
+			printf("\npai\n");
+			imprime_arvore(pai2->personagem);
 			filho= cria_arvore_personagem(k);
+			filho->info->pai=pai1->personagem->info->id;
+			filho->info->mae=pai2->personagem->info->id;
 			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
 			k++;
 			flag[5]=1;
+			printf("\nfilho\n");
+			imprime_arvore(filho);
 		}
 		else
 			i--;
 		if(aux==i)
-			insere_lista(cabeca, k-1 , filho);
-		srand( (unsigned)time(NULL) );
+			insere_lista(cabeca, k-2 , filho);
 	}
 
 }
@@ -607,7 +657,7 @@ int main()
 
 	for (i=0; i<8; i++){
 		nodo = retorna_elemento(lista, i);
-		imprime_arvore(nodo->personagem);
+		printf("aindaimprime");
 	}
 
 
