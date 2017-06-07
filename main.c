@@ -299,8 +299,7 @@ Lista* cria_primeiros_personagens(){
 	Tree* personagem;
 	srand(time(NULL));
 	for (i=1; i<5; i++){
-		*posicao = 1;
-		
+		*posicao = 1;	
 		personagem=cria_arvore_personagem(i);
 		insere_lista(lista, i-1 , personagem);
 		preenche_lista_primeiros(personagem, posicao);
