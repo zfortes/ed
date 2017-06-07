@@ -311,41 +311,42 @@ Lista* cria_primeiros_personagens(){
 
 
 int carac_mutante(int carac){/*Funcao retorna um inteiro correspondente a caracteristica aleatoria para um gene mutante*/
-	int x;
+	int x=0;
 
-	srand((unsigned)time(NULL));
+	//variável = (rand() % ((MAIOR VALOR - menor valor) + 1)) + menor valor ;
+
+	// Define um intervalo para [menor valor, MAIOR VALOR]
 	if((carac>0) && (carac<5)){
-		x=1+(rand()%4);
+		x=(rand()%((4-1)+1))+1;
 	}
 	else if((carac>4) && (carac<7)){
-		x=5+(rand()%6);
+		x=(rand()%((6-5)+1))+5;
 	}
 	else if((carac>6) && (carac<11)){
-		x=7+(rand()%10);
+		x=(rand()%((10-7)+1))+7;
 	}
 	else if((carac>10) && (carac<15)){
-		x=11+(rand()%14);
+		x=(rand()%((14-11)+1))+11;
 	}
 	else if((carac>14) && (carac<18)){
-		x=15+(rand()%17);
+		x=(rand()%((17-15)+1))+15;
 	}
 	else if((carac>17) && (carac<21)){
-		x=18+(rand()%20);
+		x=(rand()%((20-18)+1))+18;
 	}
 	else if((carac>20) && (carac<24)){
-		x=21+(rand()%23);
+		x=(rand()%((23-21)+1))+21;
 	}
 	else if((carac>23) && (carac<27)){
-		x=24+(rand()%26);
+		x=(rand()%((26-24)+1))+24;
 	}
 	return x;
 }
 
 int retorna_dominante(int carac1, int carac2){/*Funcao retorna o inteiro correspondente ao do gene dominante ou -1 para um mutante*/
 	int mut=-1, x;
-	
-	srand((unsigned)time(NULL));
-	x=1+(rand()%10);
+
+	x=(rand()%((10-1)+1))+1;
 	if((x==1) || (x==2)){/*Teste de mutacao*/
 		return mut;
 	}
@@ -362,7 +363,6 @@ int retorna_dominante(int carac1, int carac2){/*Funcao retorna o inteiro corresp
 }
 
 void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funcao percorre duas arvores e preenche uma terceira*/
-	int cont=0;
 	
 	if( pai!= NULL){
 		if((strcmp(filho->left->info->carac, "VAZIO")==0) && (strcmp(filho->right->info->carac, "VAZIO"))==0){
@@ -392,8 +392,9 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 			}
 			/*Mutacao*/
 			if(filho->left->info->dom==-1){
+                                printf("-1");
 				filho->left->info->mutante=1;
-				filho->left->info->dom=carac_mutante(filho->left->info->dom);
+				filho->left->info->dom=carac_mutante(pai->left->info->dom);
 				
 				if(filho->left->info->dom==1)
 					strcpy(filho->left->info->carac,"azul");
@@ -449,8 +450,9 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 					strcpy(filho->left->info->carac,"sem camisa");
 			}
 			if(filho->right->info->dom==-1){
+                                printf("-1");
 				filho->right->info->mutante=1;
-				filho->right->info->dom=carac_mutante(filho->right->info->dom);
+				filho->right->info->dom=carac_mutante(mae->right->info->dom);
 				
 				if(filho->right->info->dom==1)
 					strcpy(filho->right->info->carac,"azul");
@@ -641,6 +643,31 @@ void cria_novageracao(int *usados){
 
 } 
 
+void imprime_personagem(Tree *persona, int id){
+	if(id==0)
+		printf("\n\n-Identificacao: %d  -Pai: %d -Mae: %d\n", persona->info->id, persona->info->pai, persona->info->mae);
+	if((strcmp(persona->info->carac, "personagem")!=0) && (strcmp(persona->info->carac, "cabeca")!=0) && (strcmp(persona->info->carac, "corpo")!=0))
+		printf("\n %s", persona->info->carac);
+	if( persona!= NULL){
+		if(((persona->left->left==NULL) && (persona->left->right==NULL)) && ((persona->right->left==NULL) && (persona->right->right==NULL))){
+			if(persona->left->info->mutante==1)
+				printf(": MUTANTE (%d)%s,",persona->left->info->dom, persona->left->info->carac);
+                        else
+                                printf(": (%d)%s,",persona->left->info->dom, persona->left->info->carac);
+                        if(persona->right->info->mutante==1)
+				printf(" MUTANTE (%d)%s",persona->right->info->dom, persona->right->info->carac);
+                        else
+                                printf(" (%d)%s",persona->right->info->dom, persona->right->info->carac);
+                        if((strcmp(persona->info->carac, "formato")==0) || (strcmp(persona->info->carac, "tipo")==0) || (strcmp(persona->info->carac, "botas")==0))
+                                printf("\n");
+		}
+		else{/*Recursividade para percorrer a lista*/
+	        	imprime_personagem(persona->left, 1);
+        		imprime_personagem(persona->right, 1);
+		}
+        }
+}
+
 int main(){
 	int *usados;
 
@@ -651,7 +678,7 @@ int main(){
 
 	Lista* lista = cria_primeiros_personagens();
 	usados=cria_descendente(lista);
-	cria_novageracao(usados);
+	//cria_novageracao(usados);
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
@@ -660,15 +687,13 @@ int main(){
 
 	for (i=0; i<8; i++){
 		nodo = retorna_elemento(lista, i);
-		imprime_arvore(nodo->personagem);
+		imprime_personagem(nodo->personagem, 0);
 	}
 
 
 	
 	printf("\nO personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual");
 	printf("\n\n");
-
-
 
 	/*Caso queira testar a biblioteca grafica */
 	//imprime_personagem_aleatorio();
