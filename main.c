@@ -26,6 +26,8 @@ void    insere_lista(Lista *cabeca, int posicao, Tree *personagem);
 void    remove_lista(Lista *cabeca, int posicao);
 void    free_lista(Lista* cabeca);
 
+void cria_novageracao(int *usados, Lista *lista);
+
 
 Lista* cria_lista(){/*Funcao que cria e retorna o endereo da lista*/
 	Lista *plista = (Lista *) malloc(sizeof(Lista));
@@ -598,9 +600,11 @@ int* cria_descendente(Lista *cabeca){
 
 }
 
-void cria_novageracao(int *usados){
+void cria_novageracao(int *usados, Lista *lista){
 	int matriz[8][8], i, j;
 
+
+	printf("Passou 0.5\n");
 	//Elimina a possibilidade de um casal ser formado com ele mesmo na matriz
 	for(i=0; i<8; i++){
 		for(j=0; j<8; j++){
@@ -615,31 +619,55 @@ void cria_novageracao(int *usados){
 	//Insere os casais ja feitos na funcao dos 8 primeiros
 	if(usados[0]==1){
 		matriz[0][1]=1;
+		matriz[1][0]=1;
 	}
 	if(usados[1]==1){
 		matriz[0][2]=1;
+		matriz[2][0]=1;
 	}
 	if(usados[2]==1){
 		matriz[0][3]=1;
+		matriz[3][0]=1;
 	}
 	if(usados[3]==1){
 		matriz[1][2]=1;
+		matriz[2][1]=1;
 	}
 	if(usados[4]==1){
 		matriz[1][3]=1;
+		matriz[3][1]=1;
 	}
 	if(usados[5]==1){
 		matriz[2][3]=1;
+		matriz[3][2]=1;
 	}
 
-	Tree* pai1, pai2;
+	Nodo* nodo;
+	Tree* filho; 
+	Tree* pai, *mae;
 	int escolha1, escolha2;
-	//while (i=7; i<15; i++){
-	//	escolha1 = 7 + rand() % 8;
-	//	escolha2 = 7 + rand() % 8;
-	//}
+	for (i=8; i<16; i++){
+		escolha1 = 1 + rand() % 8;
+		escolha2 = 1 + rand() % 8;
+		while (matriz[escolha1-1][escolha2-1] != 0){
+			escolha1 = 1 + rand() % 8;
+			escolha2 = 1 + rand() % 8;
+		}
+		//seta o novo casal
+		matriz[escolha1-1][escolha2-1]=1;
+		matriz[escolha2-1][escolha1-1]=1;
 
 
+		filho = cria_arvore_personagem(i);
+		printf("Passou 1\n");
+		nodo = retorna_elemento(lista, escolha1 - 1);
+		pai = nodo->personagem;
+		nodo = retorna_elemento(lista, escolha2 - 1);
+		mae = nodo->personagem;
+
+		preenche_personagem(pai, mae, filho, i);
+		insere_lista(lista, i, filho);
+	}
 } 
 
 void imprime_personagem(Tree *persona, int id){
@@ -677,14 +705,14 @@ int main(){
 
 	Lista* lista = cria_primeiros_personagens();
 	usados=cria_descendente(lista);
-	//cria_novageracao(usados);
+	cria_novageracao(usados, lista);
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
 	int i;
 	Nodo *nodo;
 
-	for (i=0; i<8; i++){
+	for (i=0; i<16; i++){
 		nodo = retorna_elemento(lista, i);
 		imprime_personagem(nodo->personagem, 0);
 	}
