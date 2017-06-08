@@ -646,27 +646,26 @@ void cria_novageracao(int *usados, Lista *lista){
 	Tree* filho; 
 	Tree* pai, *mae;
 	int escolha1, escolha2;
-	for (i=8; i<16; i++){
+	for (i=9; i<=16; i++){
 		escolha1 = 1 + rand() % 8;
 		escolha2 = 1 + rand() % 8;
-		while (matriz[escolha1-1][escolha2-1] != 0){
-			escolha1 = 1 + rand() % 8;
-			escolha2 = 1 + rand() % 8;
+		while (matriz[escolha1][escolha2] != 0){
+			escolha1 = rand() % 8;
+			escolha2 = rand() % 8;
 		}
 		//seta o novo casal
-		matriz[escolha1-1][escolha2-1]=1;
-		matriz[escolha2-1][escolha1-1]=1;
-
-
+		matriz[escolha1][escolha2]=1;
+		matriz[escolha2][escolha1]=1;
 		filho = cria_arvore_personagem(i);
-		printf("Passou 1\n");
-		nodo = retorna_elemento(lista, escolha1 - 1);
+		filho->info->pai=escolha1;
+		filho->info->mae=escolha2;
+		nodo = retorna_elemento(lista, escolha1);
 		pai = nodo->personagem;
-		nodo = retorna_elemento(lista, escolha2 - 1);
+		nodo = retorna_elemento(lista, escolha2);
 		mae = nodo->personagem;
 
 		preenche_personagem(pai, mae, filho, i);
-		insere_lista(lista, i, filho);
+		insere_lista(lista, i-1, filho);
 	}
 } 
 
