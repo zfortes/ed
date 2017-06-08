@@ -647,11 +647,11 @@ void cria_novageracao(int *usados, Lista *lista){
 	Tree* pai, *mae;
 	int escolha1, escolha2;
 	for (i=9; i<=16; i++){
-		escolha1 = 1 + rand() % 8;
-		escolha2 = 1 + rand() % 8;
+		escolha1 = 1 + rand() % 7;
+		escolha2 = 1 + rand() % 7;
 		while (matriz[escolha1][escolha2] != 0){
-			escolha1 = rand() % 8;
-			escolha2 = rand() % 8;
+			escolha1 = rand() % 7;
+			escolha2 = rand() % 7;
 		}
 		//seta o novo casal
 		matriz[escolha1][escolha2]=1;
