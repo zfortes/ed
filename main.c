@@ -656,15 +656,20 @@ void cria_novageracao(int *usados, Lista *lista){
 		//seta o novo casal
 		matriz[escolha1][escolha2]=1;
 		matriz[escolha2][escolha1]=1;
+
 		filho = cria_arvore_personagem(i);
+		//Coloca os ids dos pais no filho
 		filho->info->pai=escolha1;
 		filho->info->mae=escolha2;
+		//retorna a arvore do pai
 		nodo = retorna_elemento(lista, escolha1);
 		pai = nodo->personagem;
+		//Retorna a arvore da mae
 		nodo = retorna_elemento(lista, escolha2);
 		mae = nodo->personagem;
 
 		preenche_personagem(pai, mae, filho, i);
+		//Insere o filho na lista
 		insere_lista(lista, i-1, filho);
 	}
 } 
