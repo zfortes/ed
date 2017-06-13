@@ -658,6 +658,8 @@ void cria_novageracao(int *usados, Lista *lista){
 		matriz[escolha2][escolha1]=1;
 
 		filho = cria_arvore_personagem(i);
+		filho->info->pai=escolha1+1;
+		filho->info->mae=escolha2+1;
 		//Coloca os ids dos pais no filho
 		filho->info->pai=escolha1;
 		filho->info->mae=escolha2;
@@ -674,9 +676,9 @@ void cria_novageracao(int *usados, Lista *lista){
 	}
 } 
 
-void imprime_personagem(Tree *persona, int id){
+void imprime_personagem_text(Tree *persona, int id){
 	if(id==0)
-		printf("\n\n-Identificacao: %d  -Pai: %d -Mae: %d\n", persona->info->id, persona->info->pai, persona->info->mae);
+		printf("\n---------------------------------------------\n\n-Identificacao: %d  -Pai: %d -Mae: %d\n", persona->info->id, persona->info->pai, persona->info->mae);
 	if((strcmp(persona->info->carac, "personagem")!=0) && (strcmp(persona->info->carac, "cabeca")!=0) && (strcmp(persona->info->carac, "corpo")!=0))
 		printf("\n %s", persona->info->carac);
 	if( persona!= NULL){
@@ -693,8 +695,8 @@ void imprime_personagem(Tree *persona, int id){
                                 printf("\n");
 		}
 		else{/*Recursividade para percorrer a lista*/
-	        	imprime_personagem(persona->left, 1);
-        		imprime_personagem(persona->right, 1);
+	        	imprime_personagem_text(persona->left, 1);
+        		imprime_personagem_text(persona->right, 1);
 		}
         }
 }
@@ -718,7 +720,7 @@ int main(){
 
 	for (i=0; i<16; i++){
 		nodo = retorna_elemento(lista, i);
-		imprime_personagem(nodo->personagem, 0);
+		imprime_personagem_text(nodo->personagem, 0);
 	}
 
 
