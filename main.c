@@ -532,22 +532,21 @@ void cria_novageracao(Lista *lista){
 			}
 		}
 	}
-
+	
 
 	Nodo* nodo;
 	Tree* filho; 
 	Tree* pai, *mae;
 	int escolha1, escolha2;
 
-	for (i=4; i<=8; i++){
-		printf("wedfghj\n");
-		escolha1 = rand() % (((3-0)+1)-0);
-		escolha2 = rand() % (((3-0)+1)-0);
-		while (matriz[escolha1][escolha2] != 0){
-			escolha1 = rand() % (((3-0)+1)-0);
-			escolha2 = rand() % (((3-0)+1)-0);
-			
-		printf("while %d %d\n", escolha1, escolha2);
+
+	for (i=5; i<=8; i++){
+		escolha1 = rand() % 4;
+		escolha2 = rand() % 4;
+		while (matriz[escolha1][escolha2] == 1){
+			printf("%d %d\n", escolha1, escolha2 );
+			escolha1 = rand() % 4;
+			escolha2 = rand() % 4;
 		}
 		//seta o novo casal
 		matriz[escolha1][escolha2]=1;
@@ -566,6 +565,8 @@ void cria_novageracao(Lista *lista){
 		//Insere o filho na lista
 		insere_lista(lista, i-1, filho);
 	}
+
+
 
 	for (i=9; i<=16; i++){
 		escolha1 = rand() % 7;
@@ -591,7 +592,7 @@ void cria_novageracao(Lista *lista){
 		//Insere o filho na lista
 		insere_lista(lista, i-1, filho);
 	}
-} 
+}
 
 void imprime_personagem_text(Tree *persona, int id){
 	if(id==0)
