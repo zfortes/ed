@@ -393,7 +393,6 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 			}
 			/*Mutacao*/
 			if(filho->left->info->dom==-1){
-                                printf("-1");
 				filho->left->info->mutante=1;
 				filho->left->info->dom=carac_mutante(pai->left->info->dom);
 				
@@ -451,7 +450,6 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 					strcpy(filho->left->info->carac,"sem camisa");
 			}
 			if(filho->right->info->dom==-1){
-                                printf("-1");
 				filho->right->info->mutante=1;
 				filho->right->info->dom=carac_mutante(mae->right->info->dom);
 				
@@ -518,89 +516,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 }
 
 
-int* cria_descendente(Lista *cabeca){
-	int i=0, x, k=5, aux, possibilidades[6], *flag = (int *) calloc (6, sizeof (int));
-	Nodo *pai1, *pai2;
-	Tree *filho;
-
-	for(i=0; i<6; i++){
-		possibilidades[i]=i;
-		flag[i]=0;
-	}
-	srand( (unsigned)time(NULL) );
-	for(i=0; i <4; i++){
-		aux=i;
-	        x=rand()%6;
-		if((x==possibilidades[0]) && flag[0]==0){
-			pai1=retorna_elemento(cabeca, 0);
-			pai2=retorna_elemento(cabeca, 1);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[0]=1;
-		}
-		else if((x==possibilidades[1]) && flag[1]==0){
-			pai1=retorna_elemento(cabeca, 0);
-			pai2=retorna_elemento(cabeca, 2);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[1]=1;
-		}
-		else if((x==possibilidades[2]) && flag[2]==0){
-			pai1=retorna_elemento(cabeca, 0);
-			pai2=retorna_elemento(cabeca, 3);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[2]=1;
-		}
-		else if((x==possibilidades[3]) && flag[3]==0){
-			pai1=retorna_elemento(cabeca, 1);
-			pai2=retorna_elemento(cabeca, 2);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[3]=1;
-		}
-		else if((x==possibilidades[4]) && flag[4]==0){
-			pai1=retorna_elemento(cabeca, 1);
-			pai2=retorna_elemento(cabeca, 3);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[4]=1;
-		}
-		else if((x==possibilidades[5]) && flag[5]==0){
-			pai1=retorna_elemento(cabeca, 2);
-			pai2=retorna_elemento(cabeca, 3);
-			filho= cria_arvore_personagem(k);
-			filho->info->pai=pai1->personagem->info->id;
-			filho->info->mae=pai2->personagem->info->id;
-			preenche_personagem(pai1->personagem, pai2->personagem, filho, k);
-			k++;
-			flag[5]=1;
-		}
-		else
-			i--;
-		if(aux==i)
-			insere_lista(cabeca, k-2 , filho);
-	}
-	return flag;
-
-}
-
-void cria_novageracao(int *usados, Lista *lista){
+void cria_novageracao(Lista *lista){
 	int matriz[8][8], i, j;
 
 
@@ -616,36 +532,41 @@ void cria_novageracao(int *usados, Lista *lista){
 			}
 		}
 	}
-	//Insere os casais ja feitos na funcao dos 8 primeiros
-	if(usados[0]==1){
-		matriz[0][1]=1;
-		matriz[1][0]=1;
-	}
-	if(usados[1]==1){
-		matriz[0][2]=1;
-		matriz[2][0]=1;
-	}
-	if(usados[2]==1){
-		matriz[0][3]=1;
-		matriz[3][0]=1;
-	}
-	if(usados[3]==1){
-		matriz[1][2]=1;
-		matriz[2][1]=1;
-	}
-	if(usados[4]==1){
-		matriz[1][3]=1;
-		matriz[3][1]=1;
-	}
-	if(usados[5]==1){
-		matriz[2][3]=1;
-		matriz[3][2]=1;
-	}
+
 
 	Nodo* nodo;
 	Tree* filho; 
 	Tree* pai, *mae;
 	int escolha1, escolha2;
+
+	for (i=4; i<=8; i++){
+		printf("wedfghj\n");
+		escolha1 = rand() % (((3-0)+1)-0);
+		escolha2 = rand() % (((3-0)+1)-0);
+		while (matriz[escolha1][escolha2] != 0){
+			escolha1 = rand() % (((3-0)+1)-0);
+			escolha2 = rand() % (((3-0)+1)-0);
+			
+		printf("while %d %d\n", escolha1, escolha2);
+		}
+		//seta o novo casal
+		matriz[escolha1][escolha2]=1;
+		matriz[escolha2][escolha1]=1;
+		filho = cria_arvore_personagem(i);
+		//Coloca os ids dos pais no filho
+		filho->info->pai=escolha1+1;
+		filho->info->mae=escolha2+1;
+		//retorna a arvore do pai
+		nodo = retorna_elemento(lista, escolha1);
+		pai = nodo->personagem;
+		//Retorna a arvore da mae
+		nodo = retorna_elemento(lista, escolha2);
+		mae = nodo->personagem;
+		preenche_personagem(pai, mae, filho, i);
+		//Insere o filho na lista
+		insere_lista(lista, i-1, filho);
+	}
+
 	for (i=9; i<=16; i++){
 		escolha1 = rand() % 7;
 		escolha2 = rand() % 7;
@@ -706,8 +627,7 @@ int main(){
 	//imprime_arvore(personagem);
 
 	Lista* lista = cria_primeiros_personagens();
-	usados=cria_descendente(lista);
-	cria_novageracao(usados, lista);
+	cria_novageracao(lista);
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
 	
