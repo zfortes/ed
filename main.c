@@ -520,7 +520,6 @@ void cria_novageracao(Lista *lista){
 	int matriz[8][8], i, j;
 
 
-	printf("Passou 0.5\n");
 	//Elimina a possibilidade de um casal ser formado com ele mesmo na matriz
 	for(i=0; i<8; i++){
 		for(j=0; j<8; j++){
@@ -544,7 +543,6 @@ void cria_novageracao(Lista *lista){
 		escolha1 = rand() % 4;
 		escolha2 = rand() % 4;
 		while (matriz[escolha1][escolha2] == 1){
-			printf("%d %d\n", escolha1, escolha2 );
 			escolha1 = rand() % 4;
 			escolha2 = rand() % 4;
 		}
@@ -619,8 +617,62 @@ void imprime_personagem_text(Tree *persona, int id){
         }
 }
 
+void menu(Lista *lista){	
+	int i, k=0, escolha;
+	char escolhaT[37], aux[2];
+	Nodo *nodo;
+
+	printf("Escolha uma opcao para a visualizacao de personagem:\n");
+	printf("1-Visualizar personagem único\n");	
+	printf("2-Visualizar conjunto de personagens\n");
+	printf("3-Visualizar todos personagens\n");
+	scanf("%d", &escolha);
+	while((escolha!=1) && (escolha!=2) && (escolha!=3)){
+		printf("Escolha invalida, digite novamente: ");
+		scanf("%d", &escolha);
+	}
+	if (escolha==1){
+		printf("Digite o numero do personagem que deseja vizualizar(entre 1 e 16): ");
+		scanf("%d", &escolha);
+		nodo = retorna_elemento(lista, escolha-1);
+		imprime_personagem_text(nodo->personagem, 0);
+		printf("\n");
+	}
+	else if(escolha==2){
+		printf("Digite(separando por espaco) o numero dos personagens que deseja vizualizar :");
+		getchar();
+		scanf("%[^\n]", escolhaT);
+		while(k!=(strlen(escolhaT))){
+			if((escolhaT[k+1]==' ') || (escolhaT[k+1]=='\0')){
+				if((escolhaT[k-1]!=' ') && (k>0)){
+					aux[0]=escolhaT[k-1];
+					aux[1]=escolhaT[k];
+					escolha=atoi(aux);
+					nodo = retorna_elemento(lista, escolha-1);
+					imprime_personagem_text(nodo->personagem, 0);
+					
+				}
+				else{
+					aux[0]=escolhaT[k];
+					escolha=atoi(aux);
+					nodo = retorna_elemento(lista, escolha-1);
+					imprime_personagem_text(nodo->personagem, 0);
+				}
+			}
+			k++;
+		}
+		printf("\n");
+	}
+	else{
+		for (i=0; i<16; i++){
+			nodo = retorna_elemento(lista, i);
+			imprime_personagem_text(nodo->personagem, 0);
+		}
+	}
+	printf("\n");
+}
+
 int main(){
-	int *usados;
 
 	/*Criamos uma arvore de personagem para testes */
 	/*Lembre-se que ela recebe o id do personagem */
@@ -629,21 +681,13 @@ int main(){
 
 	Lista* lista = cria_primeiros_personagens();
 	cria_novageracao(lista);
+	menu(lista);
 	/*printf("Dominio olhos = %d\n", personagem->left->left->left->info->dom);
 	printf("%s\n", personagem->left->right->right->info->carac);*/
-	
-	int i;
-	Nodo *nodo;
-
-	for (i=0; i<16; i++){
-		nodo = retorna_elemento(lista, i);
-		imprime_personagem_text(nodo->personagem, 0);
-	}
-
 
 	
-	printf("\nO personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual");
-	printf("\n\n");
+	//printf("\nO personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual");
+	//printf("\n\n");
 
 	/*Caso queira testar a biblioteca grafica */
 	//imprime_personagem_aleatorio();
