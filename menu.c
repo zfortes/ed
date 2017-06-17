@@ -77,7 +77,6 @@ void menu(Lista *lista){
 					aux[0]=escolhaT[k];
 					aux[1]=' ';
 					escolha=atoi(aux);
-					printf("\n%d\n", escolha);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
 					imprime_personagem(nodo->personagem);
