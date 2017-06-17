@@ -55,7 +55,7 @@ void menu(Lista *lista){
 		scanf("%d", &escolha);
 		nodo = retorna_elemento(lista, escolha-1);
 		imprime_personagem_text(nodo->personagem, 0);
-		//imprime_personagem(nodo->personagem);
+		imprime_personagem(nodo->personagem);
 		printf("\n");
 	}
 	else if(escolha==2){
@@ -70,7 +70,7 @@ void menu(Lista *lista){
 					escolha=atoi(aux);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					//imprime_personagem(nodo->personagem);
+					imprime_personagem(nodo->personagem);
 					
 				}
 				else{
@@ -78,7 +78,7 @@ void menu(Lista *lista){
 					escolha=atoi(aux);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					//imprime_personagem(nodo->personagem);
+					imprime_personagem(nodo->personagem);
 				}
 			}
 			k++;
@@ -89,7 +89,7 @@ void menu(Lista *lista){
 		for (i=0; i<16; i++){
 			nodo = retorna_elemento(lista, i);
 			imprime_personagem_text(nodo->personagem, 0);
-			//imprime_personagem(nodo->personagem);
+			imprime_personagem(nodo->personagem);
 		}
 	}
 	printf("\n");

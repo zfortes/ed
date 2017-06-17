@@ -117,7 +117,7 @@ void remove_lista(Lista *cabeca, int posicao){/*Remove um elemento em qualquer p
 
 void free_lista(Lista* cabeca){/*Funcao libera todos os elementos da lista*/
 	Nodo *elemento=cabeca->primeiro;
-	Nodo *aux;
+	Nodo *aux=cabeca->primeiro;
 	while(aux!=NULL){
 		aux=elemento->prox;
 		free(elemento);
