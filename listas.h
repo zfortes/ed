@@ -16,3 +16,4 @@ int     tamanho_lista(Lista *cabeca);
 void    insere_lista(Lista *cabeca, int posicao, Tree *personagem);
 void    remove_lista(Lista *cabeca, int posicao);
 void    free_lista(Lista* cabeca);
+void libera_tudo(Lista* lista);

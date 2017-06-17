@@ -176,7 +176,7 @@ Lista* cria_primeiros_personagens(){
 		insere_lista(lista, i-1 , personagem);
 		preenche_lista_primeiros(personagem, posicao);
 	}
-
+	free(posicao);
 	return lista;
 }
 

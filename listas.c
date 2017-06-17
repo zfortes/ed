@@ -34,13 +34,14 @@ int vazia_lista(Lista *cabeca){/*Funcao retorna 1 caso a lista esteja vazia e 0 
 Nodo* retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco da ultima celula da lista*/
 	Nodo *last = (Nodo *) malloc (sizeof(Nodo));
 	int c=0;
-
+	free(last);
 	last = cabeca->primeiro;
 
 	while(c!=posicao){
 		last=last->prox;
 		c++;
 	}
+
 	return last;
 }
 
@@ -48,16 +49,20 @@ int tamanho_lista(Lista *cabeca){/*Retorna um inteiro com tamanho(Número de cel
 	int i=1;
 	Nodo *last = (Nodo *) malloc (sizeof(Nodo));	
 
+	free(last);
+
 	last = cabeca->primeiro;
 	while(last->prox!=NULL){
 		last=last->prox;
 		i++;
 	}
+	
 	return i;
 }
 
 void insere_lista(Lista *cabeca, int posicao, Tree *personagem){/*Funcao que insere em qualquer posicao da lista*/
-	Nodo *novo = (Nodo *) malloc (sizeof(Nodo)), *aux;
+	Nodo *novo = (Nodo *) malloc (sizeof(Nodo));
+	Nodo *aux;
 	int tamanho;
 
 	novo->personagem=personagem;
@@ -112,10 +117,28 @@ void remove_lista(Lista *cabeca, int posicao){/*Remove um elemento em qualquer p
 
 void free_lista(Lista* cabeca){/*Funcao libera todos os elementos da lista*/
 	Nodo *elemento=cabeca->primeiro;
-	
-	while(elemento!=NULL){
-		elemento=elemento->prox;
-		free(elemento->ant);
+	Nodo *aux;
+	while(aux!=NULL){
+		aux=elemento->prox;
+		free(elemento);
+		elemento=aux;
 	}
+	free(elemento);
 	free(cabeca);
+}
+
+void libera_tudo(Lista* lista){
+	int i;
+	Nodo* nodo;
+	Tree* tree;
+	nodo = lista->primeiro;
+	
+	for (i=0; i<16; i++){
+		tree=nodo->personagem;
+		tree_free(tree);
+		nodo=nodo->prox;
+
+	}
+	
+	free_lista(lista);
 }

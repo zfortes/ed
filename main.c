@@ -23,6 +23,6 @@ int main(){
 	Lista* lista = cria_primeiros_personagens();
 	cria_novageracao(lista);
 	menu(lista);
-	
+	libera_tudo(lista);
     return 0;
 }
