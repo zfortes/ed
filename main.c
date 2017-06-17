@@ -17,12 +17,15 @@
 
 
 int main(){
-
+	int executa=1;
 	
-
-	Lista* lista = cria_primeiros_personagens();
-	cria_novageracao(lista);
-	menu(lista);
-	libera_tudo(lista);
+	while(executa==1){
+		Lista* lista = cria_primeiros_personagens();
+		cria_novageracao(lista);
+		menu(lista);
+		libera_tudo(lista);
+		executa=continua();
+	}
+	printf("Programa encerrado\n");
     return 0;
 }

@@ -51,7 +51,7 @@ void menu(Lista *lista){
 		scanf("%d", &escolha);
 	}
 	if (escolha==1){
-		printf("Digite o numero do personagem que deseja vizualizar(entre 1 e 16): ");
+		printf("Digite o numero do personagem que deseja visualizar(entre 1 e 16): ");
 		scanf("%d", &escolha);
 		nodo = retorna_elemento(lista, escolha-1);
 		imprime_personagem_text(nodo->personagem, 0);
@@ -59,7 +59,7 @@ void menu(Lista *lista){
 		printf("\n");
 	}
 	else if(escolha==2){
-		printf("Digite(separando por espaco) o numero dos personagens que deseja vizualizar :");
+		printf("Digite(separando por espaco) o numero dos personagens que deseja visualizar :");
 		getchar();
 		scanf("%[^\n]", escolhaT);
 		while(k!=(strlen(escolhaT))){
@@ -75,7 +75,9 @@ void menu(Lista *lista){
 				}
 				else{
 					aux[0]=escolhaT[k];
+					aux[1]=' ';
 					escolha=atoi(aux);
+					printf("\n%d\n", escolha);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
 					imprime_personagem(nodo->personagem);
@@ -93,4 +95,25 @@ void menu(Lista *lista){
 		}
 	}
 	printf("\n");
+	printf("\nDeseja Visualizar personagens ja criados (1-Sim/2-Nao)\n");
+	scanf("%d", &escolha);
+	while((escolha!=1) && (escolha!=2)){
+		printf("Escolha invalida, digite novamente: ");
+		scanf("%d", &escolha);
+	}
+	if(escolha==1)
+		menu(lista);
+}
+
+int continua(){
+	int continuar;
+
+	printf("Deseja criar novos personagens? (1-Sim/2-Nao)\n");
+	scanf("%d", &continuar);
+	while((continuar!=1) && (continuar!=2)){
+		printf("Escolha invalida, digite novamente: ");
+		scanf("%d", &continuar);
+	}
+	system("clear||cls");
+	return continuar;
 }

@@ -32,9 +32,8 @@ int vazia_lista(Lista *cabeca){/*Funcao retorna 1 caso a lista esteja vazia e 0 
 }
 
 Nodo* retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco da ultima celula da lista*/
-	Nodo *last = (Nodo *) malloc (sizeof(Nodo));
+	Nodo *last;
 	int c=0;
-	free(last);
 	last = cabeca->primeiro;
 
 	while(c!=posicao){
@@ -47,9 +46,8 @@ Nodo* retorna_elemento(Lista *cabeca, int posicao){/*Funcao retorna o endereco d
 
 int tamanho_lista(Lista *cabeca){/*Retorna um inteiro com tamanho(Número de celulas) da lista*/
 	int i=1;
-	Nodo *last = (Nodo *) malloc (sizeof(Nodo));	
+	Nodo *last;	
 
-	free(last);
 
 	last = cabeca->primeiro;
 	while(last->prox!=NULL){
