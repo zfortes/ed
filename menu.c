@@ -55,7 +55,7 @@ void menu(Lista *lista){
 		scanf("%d", &escolha);
 		nodo = retorna_elemento(lista, escolha-1);
 		imprime_personagem_text(nodo->personagem, 0);
-		imprime_personagem(nodo->personagem);
+		//imprime_personagem(nodo->personagem);
 		printf("\n");
 	}
 	else if(escolha==2){
@@ -64,13 +64,13 @@ void menu(Lista *lista){
 		scanf("%[^\n]", escolhaT);
 		while(k!=(strlen(escolhaT))){
 			if((escolhaT[k+1]==' ') || (escolhaT[k+1]=='\0')){
-				if((escolhaT[k-1]!=' ') && (k>0)){
+				if((k>0) && (escolhaT[k-1]!=' ')){
 					aux[0]=escolhaT[k-1];
 					aux[1]=escolhaT[k];
 					escolha=atoi(aux);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					imprime_personagem(nodo->personagem);
+					//imprime_personagem(nodo->personagem);
 					
 				}
 				else{
@@ -79,7 +79,7 @@ void menu(Lista *lista){
 					escolha=atoi(aux);
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					imprime_personagem(nodo->personagem);
+					//imprime_personagem(nodo->personagem);
 				}
 			}
 			k++;
@@ -90,7 +90,7 @@ void menu(Lista *lista){
 		for (i=0; i<16; i++){
 			nodo = retorna_elemento(lista, i);
 			imprime_personagem_text(nodo->personagem, 0);
-			imprime_personagem(nodo->personagem);
+			//imprime_personagem(nodo->personagem);
 		}
 	}
 	printf("\n");
@@ -113,6 +113,6 @@ int continua(){
 		printf("Escolha invalida, digite novamente: ");
 		scanf("%d", &continuar);
 	}
-	system("clear||cls");
+	//system("clear||cls");
 	return continuar;
 }
