@@ -125,7 +125,7 @@ void free_lista(Lista* cabeca){/*Funcao libera todos os elementos da lista*/
 	free(cabeca);
 }
 
-void libera_tudo(Lista* lista){
+void libera_tudo(Lista* lista){/*Funcao libera tudo alocado no programa, ou seja as arvores e os elementos da lista*/
 	int i;
 	Nodo* nodo;
 	Tree* tree;

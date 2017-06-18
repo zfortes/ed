@@ -19,7 +19,7 @@
 int main(){
 	int executa=1;
 	
-	while(executa==1){
+	while(executa==1){/*Executa o programa do zero criando novos personagens caso o usuario o queira*/
 		Lista* lista = cria_primeiros_personagens();
 		cria_novageracao(lista);
 		menu(lista);

@@ -11,13 +11,13 @@
 #include "criador_personagem.h"
 #include "menu.h"
 
-void imprime_personagem_text(Tree *persona, int id){
-	if(id==0)
+void imprime_personagem_text(Tree *persona, int id){/*Funcao recursiva para imprimir em texto o que corresponde a um personagem*/
+	if(id==0)/*Teste para imprimir a id do personagem, de seu pai e de sua mae*/
 		printf("\n---------------------------------------------\n\n-Identificacao: %d  -Pai: %d -Mae: %d\n", persona->info->id, persona->info->pai, persona->info->mae);
-	if((strcmp(persona->info->carac, "personagem")!=0) && (strcmp(persona->info->carac, "cabeca")!=0) && (strcmp(persona->info->carac, "corpo")!=0))
+	if((strcmp(persona->info->carac, "personagem")!=0) && (strcmp(persona->info->carac, "cabeca")!=0) && (strcmp(persona->info->carac, "corpo")!=0))/*Teste para imprimir a raiz que corresponde ao tipo da caracteristica*/
 		printf("\n %s", persona->info->carac);
 	if( persona!= NULL){
-		if(((persona->left->left==NULL) && (persona->left->right==NULL)) && ((persona->right->left==NULL) && (persona->right->right==NULL))){
+		if(((persona->left->left==NULL) && (persona->left->right==NULL)) && ((persona->right->left==NULL) && (persona->right->right==NULL))){/*Teste que impede a recursao ate as folhas da arvore do personagem*/
 			if(persona->left->info->mutante==1)
 				printf(": MUTANTE (%d)%s,",persona->left->info->dom, persona->left->info->carac);
                         else
@@ -28,7 +28,7 @@ void imprime_personagem_text(Tree *persona, int id){
                                 printf(" (%d)%s",persona->right->info->dom, persona->right->info->carac);
                         if((strcmp(persona->info->carac, "formato")==0) || (strcmp(persona->info->carac, "tipo")==0) || (strcmp(persona->info->carac, "botas")==0))
                                 printf("\n");
-		}
+		}	
 		else{/*Recursividade para percorrer a lista*/
 	        	imprime_personagem_text(persona->left, 1);
         		imprime_personagem_text(persona->right, 1);
@@ -36,7 +36,7 @@ void imprime_personagem_text(Tree *persona, int id){
         }
 }
 
-void menu(Lista *lista){	
+void menu(Lista *lista){/*Funcao que oferece ao usuario as opcoes de impressao dos personagens criados*/
 	int i, k=0, escolha;
 	char escolhaT[37], aux[2];
 	Nodo *nodo;
@@ -50,7 +50,7 @@ void menu(Lista *lista){
 		printf("Escolha invalida, digite novamente: ");
 		scanf("%d", &escolha);
 	}
-	if (escolha==1){
+	if (escolha==1){/*Usado para imprimir um unico personagem*/
 		printf("Digite o numero do personagem que deseja visualizar(entre 1 e 16): ");
 		scanf("%d", &escolha);
 		nodo = retorna_elemento(lista, escolha-1);
@@ -58,7 +58,7 @@ void menu(Lista *lista){
 		//imprime_personagem(nodo->personagem);
 		printf("\n");
 	}
-	else if(escolha==2){
+	else if(escolha==2){/*Usado para imprimir os personagens determinados pelo usuario*/
 		printf("Digite(separando por espaco) o numero dos personagens que deseja visualizar :");
 		getchar();
 		scanf("%[^\n]", escolhaT);
@@ -86,7 +86,7 @@ void menu(Lista *lista){
 		}
 		printf("\n");
 	}
-	else{
+	else{/*Usado para imprimir todos os personagens criados*/
 		for (i=0; i<16; i++){
 			nodo = retorna_elemento(lista, i);
 			imprime_personagem_text(nodo->personagem, 0);
@@ -100,11 +100,11 @@ void menu(Lista *lista){
 		printf("Escolha invalida, digite novamente: ");
 		scanf("%d", &escolha);
 	}
-	if(escolha==1)
+	if(escolha==1)/*Retorno ao menu caso o usuario queira ver os personagens ja criados*/
 		menu(lista);
 }
 
-int continua(){
+int continua(){/*Funcao que pergunta e retorna a resposta de caso o usuario deseje que novos personagens sejam criados*/
 	int continuar;
 
 	printf("Deseja criar novos personagens? (1-Sim/2-Nao)\n");

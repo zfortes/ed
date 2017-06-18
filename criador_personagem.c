@@ -5,7 +5,7 @@
 #include "criador.h"
 #include "listas.h"
 
-void preenche_lista_primeiros(Tree* personagem, int* posicao){
+void preenche_lista_primeiros(Tree* personagem, int* posicao){/*Preenche a arvore de um dos 4 personagens primordiais*/ 
 	int escolha;
 	int flag;
 	if (personagem != NULL){
@@ -162,9 +162,8 @@ void preenche_lista_primeiros(Tree* personagem, int* posicao){
 	}	
 }
 
-/*Cria os primeiros 4 personagens aleatorios*/
 
-Lista* cria_primeiros_personagens(){
+Lista* cria_primeiros_personagens(){/*Cria os primeiros 4 personagens aleatorios*/
 	Lista* lista= cria_lista();
 	int i, j;
 	int* posicao = (int *) malloc(sizeof(int));
@@ -184,9 +183,6 @@ Lista* cria_primeiros_personagens(){
 int carac_mutante(int carac){/*Funcao retorna um inteiro correspondente a caracteristica aleatoria para um gene mutante*/
 	int x=0;
 
-	//variável = (rand() % ((MAIOR VALOR - menor valor) + 1)) + menor valor ;
-
-	// Define um intervalo para [menor valor, MAIOR VALOR]
 	if((carac>0) && (carac<5)){
 		x=(rand()%((4-1)+1))+1;
 	}
@@ -236,7 +232,7 @@ int retorna_dominante(int carac1, int carac2){/*Funcao retorna o inteiro corresp
 void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funcao percorre duas arvores e preenche uma terceira*/
 	
 	if( pai!= NULL){
-		if((strcmp(filho->left->info->carac, "VAZIO")==0) && (strcmp(filho->right->info->carac, "VAZIO"))==0){
+		if((strcmp(filho->left->info->carac, "VAZIO")==0) && (strcmp(filho->right->info->carac, "VAZIO"))==0){/*Teste que impede a recursao ate as folhas da arvore do personagem*/
 			/*atribuicoes a folha left do filho*/
 			filho->left->info->pai=pai->info->id;
 			filho->left->info->mae=mae->info->id;
@@ -261,7 +257,7 @@ void preenche_personagem(Tree* pai, Tree* mae, Tree* filho, int posicao){/*Funca
 				filho->left=filho->right;
 				filho->right=aux;
 			}
-			/*Mutacao*/
+			/*Seta a flag mutante e atribui a caracteristica mutante a dominancia do filho*/
 			if(filho->left->info->dom==-1){
 				filho->left->info->mutante=1;
 				filho->left->info->dom=carac_mutante(pai->left->info->dom);
@@ -409,10 +405,10 @@ void cria_novageracao(Lista *lista){
 	int escolha1, escolha2;
 
 
-	for (i=5; i<=8; i++){
+	for (i=5; i<=8; i++){/*Sorteia entre os 4 peimordias casais para serem pais dos novos personagens que serao criados*/
 		escolha1 = rand() % 4;
 		escolha2 = rand() % 4;
-		while (matriz[escolha1][escolha2] == 1){
+		while (matriz[escolha1][escolha2] == 1){/*Impede que um casal ja formado se forme novamente*/
 			escolha1 = rand() % 4;
 			escolha2 = rand() % 4;
 		}
@@ -436,10 +432,10 @@ void cria_novageracao(Lista *lista){
 
 
 
-	for (i=9; i<=16; i++){
+	for (i=9; i<=16; i++){/*Sorteia entre os 4 peimordias casais para serem pais dos novos personagens que serao criados*/
 		escolha1 = rand() % 7;
 		escolha2 = rand() % 7;
-		while (matriz[escolha1][escolha2] != 0){
+		while (matriz[escolha1][escolha2] != 0){/*Impede que um casal ja formado se forme novamente*/
 			escolha1 = rand() % 7;
 			escolha2 = rand() % 7;
 		}
