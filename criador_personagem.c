@@ -9,16 +9,15 @@ void preenche_lista_primeiros(Tree* personagem, int* posicao){/*Preenche a arvor
 	int escolha;
 	int flag;
 	if (personagem != NULL){
-		//printf("Passou na esquerda\n");
 		preenche_lista_primeiros(personagem->left, 	posicao);
 		int escolha;
-		if (personagem->left==NULL){
+		if (personagem->left==NULL){// Verifica se a proxima posicao e NULL. Se for verdade entao personagem e uma folha.
 			flag=*posicao;
 			*posicao = flag + 1;
-			//printf("%d\n", flag);
+			//A variavel flag ira de definir em qual folha o programa esta. Assim que uma folha for encontrada a variavel flag e incrementada em seguida sera salva em *posicao
 			
+			//Divide em varias secoes para assim otimizar o codigo
 			if (flag <9){
-				
 				if (flag <7){
 					if ((flag == 1) || (flag == 2)){
 						escolha = 1+rand()%4;
@@ -405,7 +404,7 @@ void cria_novageracao(Lista *lista){
 	int escolha1, escolha2;
 
 
-	for (i=5; i<=8; i++){/*Sorteia entre os 4 peimordias casais para serem pais dos novos personagens que serao criados*/
+	for (i=5; i<=8; i++){/*Sorteia entre os 4 primordias para serem pais dos novos personagens que serao criados*/
 		escolha1 = rand() % 4;
 		escolha2 = rand() % 4;
 		while (matriz[escolha1][escolha2] == 1){/*Impede que um casal ja formado se forme novamente*/
@@ -433,11 +432,11 @@ void cria_novageracao(Lista *lista){
 
 
 	for (i=9; i<=16; i++){/*Sorteia entre os 4 peimordias casais para serem pais dos novos personagens que serao criados*/
-		escolha1 = rand() % 7;
-		escolha2 = rand() % 7;
+		escolha1 = rand() % 8;
+		escolha2 = rand() % 8;
 		while (matriz[escolha1][escolha2] != 0){/*Impede que um casal ja formado se forme novamente*/
-			escolha1 = rand() % 7;
-			escolha2 = rand() % 7;
+			escolha1 = rand() % 8;
+			escolha2 = rand() % 8;
 		}
 		//seta o novo casal
 		matriz[escolha1][escolha2]=1;
