@@ -53,13 +53,17 @@ void menu(Lista *lista){/*Funcao que oferece ao usuario as opcoes de impressao d
 	if (escolha==1){/*Usado para imprimir um unico personagem*/
 		printf("Digite o numero do personagem que deseja visualizar(entre 1 e 16): ");
 		scanf("%d", &escolha);
+		while((escolha<1) || (escolha>16)){
+			printf("\n\nEscolha invalida, digite novamente: ");
+			scanf("%d", &escolha);
+		}
 		nodo = retorna_elemento(lista, escolha-1);
 		imprime_personagem_text(nodo->personagem, 0);
-		//imprime_personagem(nodo->personagem);
+		imprime_personagem(nodo->personagem);
 		printf("\n");
 	}
 	else if(escolha==2){/*Usado para imprimir os personagens determinados pelo usuario*/
-		printf("Digite(separando por espaco) o numero dos personagens que deseja visualizar :");
+		printf("Digite(separando por espaco) o numero dos personagens que deseja visualizar(entre 1 e 16) :");
 		getchar();
 		scanf("%[^\n]", escolhaT);
 		while(k!=(strlen(escolhaT))){
@@ -68,18 +72,26 @@ void menu(Lista *lista){/*Funcao que oferece ao usuario as opcoes de impressao d
 					aux[0]=escolhaT[k-1];
 					aux[1]=escolhaT[k];
 					escolha=atoi(aux);
+					while((escolha<1) || (escolha>16)){
+						printf("\n\nEste número %d é inválido, digite novamente: ", escolha);
+						scanf("%d", &escolha);
+					}
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					//imprime_personagem(nodo->personagem);
+					imprime_personagem(nodo->personagem);
 					
 				}
 				else{
 					aux[0]=escolhaT[k];
 					aux[1]=' ';
 					escolha=atoi(aux);
+					while((escolha<1) || (escolha>16)){
+						printf("\n\nEste número %d é inválido, digite novamente: ", escolha);
+						scanf("%d", &escolha);
+					}
 					nodo = retorna_elemento(lista, escolha-1);
 					imprime_personagem_text(nodo->personagem, 0);
-					//imprime_personagem(nodo->personagem);
+					imprime_personagem(nodo->personagem);
 				}
 			}
 			k++;
@@ -90,7 +102,7 @@ void menu(Lista *lista){/*Funcao que oferece ao usuario as opcoes de impressao d
 		for (i=0; i<16; i++){
 			nodo = retorna_elemento(lista, i);
 			imprime_personagem_text(nodo->personagem, 0);
-			//imprime_personagem(nodo->personagem);
+			imprime_personagem(nodo->personagem);
 		}
 	}
 	printf("\n");
