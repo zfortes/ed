@@ -1,11 +1,12 @@
-Execute o comando:
-make
+#Trabalho 2 de ED.
 
-Logo em seguida:
-./trabalho
+#Compilacao:
+	Basta ser dado o comando make no terminal e logo apos o comando ./trabalho.
 
+#Execucao:
+	O programa funciona com opcoes basicas onde o usuario devera digitar as opcoes escolhidas conforme informado no proprio programa.
 
-Voce devera ver um personagem aleatorio graficamente, e uma impressao de texto de um personagem vazio.
+#Ambiente de compilacao utilizado.
 
-Obs: O personagem impresso graficamente nao corresponde ao personagem vazio impresso de forma textual
-
+Compilador: gcc version 5.4.0 20160609 Ubuntu 5.4.0-6ubuntu1~16.04.4 
+Sistema: Ubuntu (16.04 LTS)
